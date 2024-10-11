@@ -1,5 +1,5 @@
 const users = require('../../Models/UserSchema')
-const latestCols = require('../../Models/latestSchema')
+const latestCols = require('../../Models/LatestSchema')
 const trendingCols = require('../../Models/TrendSchema')
 
 const getMyCollection = async (req,res,next) => {

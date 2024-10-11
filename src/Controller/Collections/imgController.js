@@ -1,5 +1,4 @@
 const users = require('../../Models/UserSchema')
-const collections = require('../../Models/NftSchema')
 const mongoose = require('mongoose');
 const trendCols = require('../../Models/TrendSchema')
 const latestCols = require('../../Models/latestSchema')

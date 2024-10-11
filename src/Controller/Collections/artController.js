@@ -37,5 +37,23 @@ res.status(200).json(nftCollections)
  next(err)   
 }
 }
+const getLatestNft = async (req,res,next) => {
+try {
+const nftCollections = await latestCols.findById(req.params.id) 
+const myNfts = nftCollections.nfts  
+res.status(200).json(myNfts)    
+} catch (err) {
+ next(err)   
+}
+}
+const getTrendNft = async (req,res,next) => {
+try {
+const nftCollections = await trendingCols.findById(req.params.id)   
+const myNfts = nftCollections.nfts
+res.status(200).json(myNfts)    
+} catch (err) {
+ next(err)   
+}
+}
 
-module.exports = {getLatestCol,getTrendingCol,getMyNfts,getMyCollection}
+module.exports = {getLatestCol,getTrendingCol,getMyNfts,getMyCollection,getTrendNft,getLatestNft}

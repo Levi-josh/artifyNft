@@ -1,7 +1,7 @@
 const users = require('../../Models/UserSchema')
 const mongoose = require('mongoose');
 const trendCols = require('../../Models/TrendSchema')
-const latestCols = require('../../Models/latestSchema')
+const latestCols = require('../../Models/LatestSchema')
 const { bucket} = require('../../Utils/FirebaseCred')
 const path = require('path')
 

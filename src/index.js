@@ -14,6 +14,8 @@ const errorhandler = require("./Middleware/Error")
 const imgRoutes = require('./Routes/imgRoutes');
 const AuthRoutes = require('./Routes/AuthRoutes');
 const ArtRoutes = require('./Routes/ArtRoutes')
+const walletRoute = require('./Routes/walletRoutes')
+const userRoute = require('./Routes/UserSchema')
 
 
 App.use(cors({origin:['http://localhost:3000','https://art-work-khaki.vercel.app']}))
@@ -26,6 +28,8 @@ if (!fs.existsSync('uploads')) {
 App.use(AuthRoutes)
 App.use(imgRoutes)
 App.use(ArtRoutes)
+App.use(walletRoute)
+App.use(userRoute)
 App.use(errorhandler)
 App.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

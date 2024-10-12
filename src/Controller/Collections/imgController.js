@@ -238,6 +238,7 @@ const postLatestCols = async (req, res, next) => {
           price:0,
           artiste,
           nfts:[],
+          artiste
         } 
         const latest = await latestCols.create(items);
         res.status(200).json(latest)

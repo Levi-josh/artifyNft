@@ -94,6 +94,7 @@ const postLatestNfts = async (req, res, next) => {
           nftImage:publicUrl ,
           itemName,
           price,
+          artiste,
           approved:true,
           } 
           await latestCols.updateOne({_id:colId},{$push:{nfts:items}})
@@ -170,7 +171,7 @@ const postLatestCols = async (req, res, next) => {
           itemName:colName,
           profilePic:publicUrl,
           description,
-          approved:false,
+          approved:true,
           price:0,
           artiste,
           nfts:[],
@@ -207,7 +208,7 @@ const postTrendingCols = async (req, res, next) => {
           description,
           collections:[],
           items:0,
-          approved:false,
+          approved:true,
           price:0,
           artiste
         } 

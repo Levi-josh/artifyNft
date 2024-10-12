@@ -15,8 +15,7 @@ const getMyNfts = async (req,res,next) => {
 try {
 const user = await users.findById(req.params.id)
 const mycols = user.collections.find(prev=>prev._id == req.params.id)
-const myNfts = mycols.nfts
-res.status(200).json(myNfts)    
+res.status(200).json(mycols)    
 } catch (err) {
  next(err)   
 }
@@ -39,9 +38,8 @@ res.status(200).json(nftCollections)
 }
 const getLatestNft = async (req,res,next) => {
 try {
-const nftCollections = await latestCols.findById(req.params.id) 
-const myNfts = nftCollections.nfts  
-res.status(200).json(myNfts)    
+const nftCollections = await latestCols.findById(req.params.id)   
+res.status(200).json(nftCollections)    
 } catch (err) {
  next(err)   
 }
@@ -49,8 +47,7 @@ res.status(200).json(myNfts)
 const getTrendNft = async (req,res,next) => {
 try {
 const nftCollections = await trendingCols.findById(req.params.id)   
-const myNfts = nftCollections.nfts
-res.status(200).json(myNfts)    
+res.status(200).json(nftCollections)    
 } catch (err) {
  next(err)   
 }

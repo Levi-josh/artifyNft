@@ -20,7 +20,6 @@ const checkCollections = async () => {
             
             const items = { 
               artiste: collection.artiste,
-              price: collection.price,
               profilePic: collection.profilePic,
               nfts: collection.nfts,
               itemName: collection.itemName,

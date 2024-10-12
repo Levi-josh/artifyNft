@@ -191,12 +191,10 @@ const postCollectionPfp = async (req, res, next) => {
         const items={
           _id: collectionId,
           itemName:colName,
-          profilePicp:publicUrl,
+          profilePic:publicUrl,
           description,
-          collections:[],
-          items:0,
+          nfts:[],
           approved:false,
-          price:0,
           artiste
         } 
         await users.updateOne({_id:id},{$push:{collections:items}});
@@ -235,10 +233,9 @@ const postLatestCols = async (req, res, next) => {
           profilePic:publicUrl,
           description,
           approved:true,
-          price:0,
           artiste,
           nfts:[],
-          artiste
+
         } 
         const latest = await latestCols.create(items);
         res.status(200).json(latest)
@@ -270,9 +267,8 @@ const postTrendingCols = async (req, res, next) => {
           itemName:colName,
           profilePic:publicUrl,
           description,
-          collections:[],
+          nfts:[],
           approved:true,
-          price:0,
           artiste
         } 
        const trending =  await trendCols.create(items)
@@ -302,12 +298,10 @@ const postPopCols = async (req, res, next) => {
       try {
         const items={
           itemName:colName,
-          profilePicp:publicUrl,
+          profilePic:publicUrl,
           description,
-          collections:[],
-          items:0,
+          nfts:[],
           approved:true,
-          price:0,
           artiste
         } 
        const trending =  await trendCols.create(items)
@@ -339,10 +333,8 @@ const postPhotoCols = async (req, res, next) => {
           itemName:colName,
           profilePicp:publicUrl,
           description,
-          collections:[],
-          items:0,
+          nfts:[],
           approved:true,
-          price:0,
           artiste
         } 
        const trending =  await trendCols.create(items)

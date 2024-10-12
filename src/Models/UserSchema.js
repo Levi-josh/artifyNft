@@ -27,7 +27,6 @@ const myNfts = new mongoose.Schema({
 const nftCollections = new mongoose.Schema({
     artiste:String,
     profilePic:String,
-    price:Number,
     nfts:[myNfts], 
     itemName:String,
     description:String,

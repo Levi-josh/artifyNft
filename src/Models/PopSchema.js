@@ -10,7 +10,6 @@ approved:Boolean
 
 const collections = new mongoose.Schema({
 artiste:String,
-price:Number,
 profilePic:String,
 nfts:[myNfts],
 itemName:String,

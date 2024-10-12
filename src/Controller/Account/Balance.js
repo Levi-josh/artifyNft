@@ -1,4 +1,4 @@
-const Web3 = require('web3');
+import Web3 from 'web3';
 
 // Initialize Web3 instance directly with the Infura URL
 const web3 = new Web3('https://mainnet.infura.io/v3/4ed6751f016349faa88d6c1a60806e76');

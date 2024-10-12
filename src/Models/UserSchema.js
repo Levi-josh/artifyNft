@@ -23,7 +23,6 @@ const myNfts = new mongoose.Schema({
     nftImage:String,
     itemName:String,
     approved:Boolean,
-    description:String
     })
 const nftCollections = new mongoose.Schema({
     artiste:String,

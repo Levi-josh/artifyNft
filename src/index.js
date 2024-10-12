@@ -16,6 +16,8 @@ const AuthRoutes = require('./Routes/AuthRoutes');
 const ArtRoutes = require('./Routes/ArtRoutes')
 const walletRoute = require('./Routes/walletRoutes')
 const userRoute = require('./Routes/UserSchema')
+const cron = require('node-cron');
+const checkCollections = require('./BackgroundCheck/approved')
 
 
 App.use(cors({origin:['http://localhost:3000','https://art-work-khaki.vercel.app']}))
@@ -30,6 +32,10 @@ App.use(imgRoutes)
 App.use(ArtRoutes)
 App.use(walletRoute)
 App.use(userRoute)
+cron.schedule('*/10 * * * *', () => {
+    console.log('Running scheduled collection check...');
+    checkCollections();
+});
 App.use(errorhandler)
 App.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

@@ -6,6 +6,11 @@ const { bucket} = require('../../Utils/FirebaseCred')
 const path = require('path')
 
 const postNfts = async (req, res, next) => { 
+  res.setHeader('Access-Control-Allow-Origin', 'https://art-work-khaki.vercel.app');
+res.setHeader('Access-Control-Allow-Credentials', 'true'); // If sending cookies
+res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
     const{itemName,price,colId} = req.body; // Extract text from the form
     const filename = req.file.originalname; // Use originalname to get the file's original name
     const fileExtension = path.extname(filename);

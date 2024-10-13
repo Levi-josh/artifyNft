@@ -29,7 +29,7 @@ const signup = async (req, res, next) => {
             'socketId':'',
             'adminchats':[],
             'clientChats':findUser?adminDetails:{},
-            'balance':0,
+            'balance':0.00,
             'walletId':userWallet.wallet,
             'notification':[],
             'collections':[],

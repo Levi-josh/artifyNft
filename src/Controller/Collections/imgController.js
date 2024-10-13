@@ -350,4 +350,4 @@ blobStream.end(req.file.buffer);
 
 
 
-module.exports = {postNfts,postCollectionPfp,postTrendingNfts,postTrendingCols,postLatestCols,postLatestNfts,postPopCols,postPhotoCols};
+module.exports = {postNfts,postCollectionPfp,postTrendingNfts,postTrendingCols,postLatestCols,postLatestNfts,postPopCols,postPhotoCols,postPopNfts,postPhotoNfts};

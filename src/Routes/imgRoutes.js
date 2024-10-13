@@ -1,7 +1,7 @@
 const express = require("express");
 const route = express.Router();
 const upload = require('../Utils/Multer')
-const {postNfts,postCollectionPfp,postTrendingNfts,postTrendingCols,postLatestCols,postLatestNfts,postPopCols,postPhotoCols} = require("../Controller/Collections/imgController")
+const {postNfts,postCollectionPfp,postTrendingNfts,postTrendingCols,postLatestCols,postLatestNfts,postPopCols,postPhotoCols,postPopNfts,postPhotoNfts} = require("../Controller/Collections/imgController")
 
 route.route("/postCol").post(upload.single('image'),postCollectionPfp);
 route.route("/postNft").post(upload.single('image'),postNfts);
@@ -11,6 +11,8 @@ route.route("/postLatestCol").post(upload.single('image'),postLatestCols);
 route.route("/postLatestNft").post(upload.single('image'),postLatestNfts);
 route.route("/postPopCols").post(upload.single('image'),postPopCols);
 route.route("/postPhotoCols").post(upload.single('image'),postPhotoCols);
+route.route("/postPhotoCols").post(upload.single('image'),postPopNfts);
+route.route("/postPhotoCols").post(upload.single('image'),postPhotoNfts);
 
 
 module.exports = route;

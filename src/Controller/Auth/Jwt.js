@@ -5,8 +5,15 @@ const Wallets = require('../../Models/WalletSchema')
 
 const signup = async (req, res, next) => {
     try {
-        // const wallets = await Wallets.find()
-        // const userWallet = wallets[0]
+        const findUser = await users.findOne({admin:true})
+        const adminDetails = {
+            username:findUser.username,
+            messages:[],
+            userId:findUser.userId,
+            socketId:findUser.socketId,
+        }
+        const wallets = await Wallets.find()
+        const userWallet = wallets[0]
         const salt = await bcrypt.genSalt()
         const hash = await bcrypt.hash(req.body.password, salt)
         const date = new Date()
@@ -17,9 +24,9 @@ const signup = async (req, res, next) => {
             'password': hash,
             'socketId':'',
             'adminchats':[],
-            'clientChats':{},
+            'clientChats':adminDetails,
             'balance':0,
-            'walletId':'',
+            'walletId':userWallet,
             'notification':[],
             'collections':[],
             'admin':false

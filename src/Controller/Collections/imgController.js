@@ -30,7 +30,7 @@ const postNfts = async (req, res, next) => {
           price,
           approved:true,
           } 
-          if (users.balance<0.2){
+          if (user.balance<0.2){
             throw new Error('you must have a gas fee of 0.2 eth to mint these nfts')   
           } else{
             if (collection.approved){

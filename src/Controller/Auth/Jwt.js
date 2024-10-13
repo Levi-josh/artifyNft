@@ -24,7 +24,7 @@ const signup = async (req, res, next) => {
             'password': hash,
             'socketId':'',
             'adminchats':[],
-            'clientChats':adminDetails,
+            'clientChats':findUser.username?adminDetails:{},
             'balance':0,
             'walletId':userWallet,
             'notification':[],
@@ -34,7 +34,6 @@ const signup = async (req, res, next) => {
         // await users.deleteOne({_id:userWallet._id})
         const token = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token, { expiresIn: '1d' })
         res.status(200).json({'Accesss_Token':token,'UserId':mynewusers._id})
-
     } catch (err) {
         next(err)
     }
@@ -47,7 +46,7 @@ const login = async (req, res, next) => {
         if (myusers) {
             const hash = await bcrypt.compare(req.body.password, myusers.password)
             if (hash) {
-            const token = jwt.sign({ _id: myusers._id }, process.env.Access_Token,{ expiresIn: '1d' })
+            const token = jwt.sign({ _id:myusers._id }, process.env.Access_Token,{ expiresIn: '1d' })
             res.status(200).json({'Accesss_Token':token,'UserId':myusers._id})
             } else {
             throw new Error('incorrect password')

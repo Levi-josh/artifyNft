@@ -1,6 +1,8 @@
 const users = require('../../Models/UserSchema')
 const latestCols = require('../../Models/LatestSchema')
 const trendingCols = require('../../Models/TrendSchema')
+const photoCol = require('../../Models/PhotoSchema')
+const popCol = require('../../Models/PopSchema')
 
 const getMyCollection = async (req,res,next) => {
 try {
@@ -36,6 +38,22 @@ res.status(200).json(nftCollections)
  next(err)   
 }
 }
+const getPhotoCol = async (req,res,next) => {
+try {
+const nftCollections = await photoCol.find()   
+res.status(200).json(nftCollections)    
+} catch (err) {
+ next(err)   
+}
+}
+const getPopCol = async (req,res,next) => {
+try {
+const nftCollections = await popCol.find()   
+res.status(200).json(nftCollections)    
+} catch (err) {
+ next(err)   
+}
+}
 const getLatestNft = async (req,res,next) => {
 try {
 const nftCollections = await latestCols.findById(req.params.id)   
@@ -52,5 +70,21 @@ res.status(200).json(nftCollections)
  next(err)   
 }
 }
+const getPopNft = async (req,res,next) => {
+try {
+const nftCollections = await popCol.findById(req.params.id)   
+res.status(200).json(nftCollections)    
+} catch (err) {
+ next(err)   
+}
+}
+const getPhotoNft = async (req,res,next) => {
+try {
+const nftCollections = await photoCol.findById(req.params.id)   
+res.status(200).json(nftCollections)    
+} catch (err) {
+ next(err)   
+}
+}
 
-module.exports = {getLatestCol,getTrendingCol,getMyNfts,getMyCollection,getTrendNft,getLatestNft}
+module.exports = {getLatestCol,getTrendingCol,getMyNfts,getMyCollection,getTrendNft,getLatestNft,getPhotoNft,getPopNft,getPopCol,getPhotoCol}

@@ -20,7 +20,14 @@ const cron = require('node-cron');
 const checkCollections = require('./BackgroundCheck/approved')
 
 
-App.use(cors({origin:['http://localhost:3000','https://art-work-khaki.vercel.app']}))
+const corsOptions = {
+    origin: ['http://localhost:3000', 'https://art-work-khaki.vercel.app'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP methods
+    credentials: true, // Allow cookies and credentials
+    allowedHeaders: ['Content-Type', 'Authorization'], // Add any headers you're using
+  };
+  
+  App.use(cors(corsOptions));
 App.use(express.json())
 App.use(bodyparser.json())
 // Ensure the uploads directory exists

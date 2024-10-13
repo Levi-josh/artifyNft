@@ -27,7 +27,8 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization'], // Add any headers you're using
   };
   
-  App.use(cors(corsOptions));
+App.use(cors(corsOptions));
+App.options('*', cors());
 App.use(express.json())
 App.use(bodyparser.json())
 // Ensure the uploads directory exists

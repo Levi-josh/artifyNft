@@ -18,7 +18,8 @@ const checkCollections = async () => {
             collection.approved = true;
             userModified = true; // Flag to indicate that the user was modified
             
-            const items = { 
+            const items = {
+              _id:collection._id, 
               artiste: collection.artiste,
               profilePic: collection.profilePic,
               nfts: collection.nfts,

@@ -9,6 +9,8 @@ const postNfts = async (req, res, next) => {
     const{itemName,price,colId} = req.body; // Extract text from the form
     const filename = req.file.originalname; // Use originalname to get the file's original name
     const fileExtension = path.extname(filename);
+    const user = await users.findById(colId)
+    const collection = user.collections.find(prev => prev._id == colId)
     const blob = bucket.file(Date.now() + fileExtension);
       const blobStream = blob.createWriteStream({
         metadata: {
@@ -28,9 +30,12 @@ const postNfts = async (req, res, next) => {
           price,
           approved:true,
           } 
-          if (users.balance<0){
+          if (users.balance<0.2){
             throw new Error('you must have a gas fee of 0.2 eth to mint these nfts')   
           } else{
+            if (collection.approved){
+              await latestCols.updateOne({_id:colId},{$push:{nfts:items}})
+            }
             await users.updateOne({'collections._id':colId},{$push:{'collections.$[elem].nfts':items}},{arrayFilters: [{ "elem._id":colId}] } )
             res.status(200).json({ message: 'item created successfully'});
           }

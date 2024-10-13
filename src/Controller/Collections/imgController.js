@@ -28,7 +28,7 @@ const postNfts = async (req, res, next) => {
           price,
           approved:true,
           } 
-          if (users.balance<0) {
+          if (users.balance<0){
             throw new Error('you must have a gas fee of 0.2 eth to mint these nfts')   
           } else{
             await users.updateOne({'collections._id':colId},{$push:{'collections.$[elem].nfts':items}},{arrayFilters: [{ "elem._id":colId}] } )

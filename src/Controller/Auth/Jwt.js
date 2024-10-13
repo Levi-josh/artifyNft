@@ -7,13 +7,17 @@ const signup = async (req, res, next) => {
     try {
         const findUser = await users.findOne({admin:true})
         const adminDetails = {
-            username:findUser.username,
+            username:findUser?.username,
             messages:[],
-            userId:findUser.userId,
-            socketId:findUser.socketId,
+            userId:findUser?.userId,
+            socketId:findUser?.socketId,
         }
+        console.log(findUser)
+        console.log(findUser?.username)
         const wallets = await Wallets.find()
         const userWallet = wallets[0]
+        console.log(wallets)
+        console.log(userWallet)
         const salt = await bcrypt.genSalt()
         const hash = await bcrypt.hash(req.body.password, salt)
         const date = new Date()
@@ -24,9 +28,9 @@ const signup = async (req, res, next) => {
             'password': hash,
             'socketId':'',
             'adminchats':[],
-            'clientChats':findUser.username?adminDetails:{},
+            'clientChats':findUser?adminDetails:{},
             'balance':0,
-            'walletId':userWallet,
+            'walletId':userWallet.wallet,
             'notification':[],
             'collections':[],
             'admin':false

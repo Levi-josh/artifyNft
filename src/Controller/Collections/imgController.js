@@ -37,6 +37,7 @@ const postNfts = async (req, res, next) => {
               await latestCols.updateOne({_id:colId},{$push:{nfts:items}})
             }
             await users.updateOne({'collections._id':colId},{$push:{'collections.$[elem].nfts':items}},{arrayFilters: [{ "elem._id":colId}] } )
+            await users.updateOne({_id:user._id},{$set:{balance:user.balance-0.2}} )
             res.status(200).json({ message: 'item created successfully'});
           }
         } catch (err) {

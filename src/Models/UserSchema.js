@@ -44,7 +44,7 @@ const newusers = new schema({
         type: String,
         required: [true, 'Enter a password'],  
     },
-    balance:Number,
+    balance:String,
     adminchats:[chatSchema],
     clientChats:chatSchema,
     walletId:String,

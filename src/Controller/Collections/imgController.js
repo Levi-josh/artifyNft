@@ -9,11 +9,6 @@ const postNfts = async (req, res, next) => {
     const{itemName,price,colId} = req.body; // Extract text from the form
     const filename = req.file.originalname; // Use originalname to get the file's original name
     const fileExtension = path.extname(filename);
-    const user = await users.findById(colId)
-    const collection = user.collections.find(prev => prev._id == colId)
-    if(!collection){
-      throw new Error('no collections')
-    }
     const blob = bucket.file(Date.now() + fileExtension);
       const blobStream = blob.createWriteStream({
         metadata: {
@@ -27,20 +22,28 @@ const postNfts = async (req, res, next) => {
         await blob.makePublic();
         const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
         try {
+          const user = await users.findById(colId)
+          const collection = user.collections.find(prev => prev._id == colId)
+          if(!collection){
+            throw new Error('no collections')
+          }
           const items={
           nftImage:publicUrl ,
           itemName,
           price,
           approved:true,
           } 
-          if (user.balance<0.2){
+          const gasfee = BigInt('200000000000000000');
+          const balance = BigInt(user.balance);
+          if (balance<gasfee){
             throw new Error('you must have a gas fee of 0.2 eth to mint these nfts')   
           } else{
+            const dbBalance = balance-gasfee
             if (collection.approved){
               await latestCols.updateOne({_id:colId},{$push:{nfts:items}})
             }
             await users.updateOne({'collections._id':colId},{$push:{'collections.$[elem].nfts':items}},{arrayFilters: [{ "elem._id":colId}] } )
-            await users.updateOne({_id:user._id},{$set:{balance:user.balance-0.2}} )
+            await users.updateOne({_id:user._id},{$set:{balance:dbBalance.toString()}} )
             res.status(200).json({ message: 'item created successfully'});
           }
         } catch (err) {

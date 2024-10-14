@@ -22,19 +22,11 @@ const getBalance = async (req, res) => {
     try {
         // Fetch balance from Ethereum network (in Wei)
         const balanceWei = await web3.eth.getBalance(address);
-        console.log(`balance:${balanceWei}`)
-
-        // Optionally, convert balance from Wei to Ether for easier display
-        // const balanceEther = Web3.utils.fromWei(balanceWei, 'ether');  // Uncomment if you want balance in Ether
-        
-        // Update user's balance in the database
+        const balanceEther = Web3.utils.fromWei(balanceWei, 'ether'); 
         await users.updateOne({ walletId: address }, { $set: { balance: balanceWei } });
-
-        // Respond with the balance
         res.status(200).json({
-            balance: balanceWei, // Or use balanceEther if you want Ether
+            balance: balanceEther, 
         });
-
     } catch (error) {
         console.error('Error fetching balance:', error);
         res.status(500).json({ error: 'Failed to fetch balance' });

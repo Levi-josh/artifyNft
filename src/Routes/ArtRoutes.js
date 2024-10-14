@@ -14,5 +14,4 @@ route.route("/latestNfts/:id").get(getLatestNft);
 route.route("/getPopCol").get(getPopCol);
 route.route("/getPhotoCol").get(getPhotoCol);
 
-
 module.exports = route;

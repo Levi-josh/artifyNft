@@ -4,7 +4,7 @@ const upload = require('../Utils/Multer')
 const {postNfts,postCollectionPfp,postTrendingNfts,postTrendingCols,postLatestCols,postLatestNfts,postPopCols,postPhotoCols,postPopNfts,postPhotoNfts} = require("../Controller/Collections/imgController")
 
 route.route("/postCol").post(upload.single('image'),postCollectionPfp);
-route.route("/postNft").post(upload.single('image'),postNfts);
+route.route("/postMynft").post(upload.single('image'),postNfts);
 route.route("/postTrendNft").post(upload.single('image'),postTrendingNfts);
 route.route("/postTrendCol").post(upload.single('image'),postTrendingCols);
 route.route("/postLatestCol").post(upload.single('image'),postLatestCols);

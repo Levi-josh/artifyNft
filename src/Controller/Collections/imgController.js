@@ -6,14 +6,13 @@ const { bucket} = require('../../Utils/FirebaseCred')
 const path = require('path')
 
 const postNfts = async (req, res, next) => { 
-
     const{itemName,price,colId} = req.body; // Extract text from the form
     const filename = req.file.originalname; // Use originalname to get the file's original name
     const fileExtension = path.extname(filename);
     const user = await users.findById(colId)
     const collection = user.collections.find(prev => prev._id == colId)
     if(!collection){
-throw new Error('no collections')
+      throw new Error('no collections')
     }
     const blob = bucket.file(Date.now() + fileExtension);
       const blobStream = blob.createWriteStream({

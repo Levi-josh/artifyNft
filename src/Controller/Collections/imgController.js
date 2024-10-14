@@ -1,5 +1,6 @@
 const users = require('../../Models/UserSchema')
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongodb')
 const trendCols = require('../../Models/TrendSchema')
 const latestCols = require('../../Models/LatestSchema')
 const { bucket} = require('../../Utils/FirebaseCred')
@@ -22,7 +23,7 @@ const postNfts = async (req, res, next) => {
         await blob.makePublic();
         const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
         try {
-          const colIdObjectId = mongoose.Types.ObjectId(colId);
+          const colIdObjectId = new ObjectId(colId)
           const user = await users.findOne({'collections._id':colIdObjectId})
           const collection = user.collections.find(prev => prev._id.toString() == colIdObjectId.toString())
           if(!collection){

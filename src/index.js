@@ -3,6 +3,17 @@ const express = require('express')
 const mongodb = require('./Utils/Dbconnect')
 const App = express();
 const cors = require('cors')
+const corsOptions = {
+    origin: ['http://localhost:3000', 'https://art-work-khaki.vercel.app'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP methods
+    credentials: true, // Allow cookies and credentials
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  };
+  
+App.use(cors(corsOptions));
+App.options('*', (req, res) => {
+    res.sendStatus(200);
+});
 const bodyparser= require('body-parser');
 const port = process.env.port || 3500;
 const http = require('http')
@@ -18,18 +29,7 @@ const walletRoute = require('./Routes/walletRoutes')
 const userRoute = require('./Routes/UserSchema')
 const cron = require('node-cron');
 const checkCollections = require('./BackgroundCheck/approved')
-  
-const corsOptions = {
-    origin: ['http://localhost:3000', 'https://art-work-khaki.vercel.app'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP methods
-    credentials: true, // Allow cookies and credentials
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  };
-  
-App.use(cors(corsOptions));
-App.options('*', (req, res) => {
-    res.sendStatus(200);
-});
+
 App.use(express.json())
 App.use(bodyparser.json())
 // Ensure the uploads directory exists

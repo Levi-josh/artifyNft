@@ -13,7 +13,7 @@ const postNfts = async (req, res, next) => {
     const user = await users.findById(colId)
     const collection = user.collections.find(prev => prev._id == colId)
     if(!collection){
-throw new Error('no collection')
+throw new Error('no collections')
     }
     const blob = bucket.file(Date.now() + fileExtension);
       const blobStream = blob.createWriteStream({

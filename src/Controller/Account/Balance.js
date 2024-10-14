@@ -14,6 +14,10 @@ const getBalance = async (req, res) => {
     if (!address) {
         return res.status(400).json({ error: 'Wallet address is required' });
     }
+    if (!web3.utils.isAddress(address)) {
+        console.log('Invalid Ethereum address')
+        return res.status(400).json({ error: 'Invalid Ethereum address' });
+    }
 
     try {
         // Fetch balance from Ethereum network (in Wei)

@@ -9,23 +9,18 @@ const users = require('../../Models/UserSchema');
 // Function to fetch balance and update user record
 const getBalance = async (req, res) => {
     const address = req.params.address;
-
-    // Check if the address is provided
-    if (!address) {
-        return res.status(400).json({ error: 'Wallet address is required' });
-    }
-    if (!web3.utils.isAddress(address)) {
-        console.log('Invalid Ethereum address')
-        return res.status(400).json({ error: 'Invalid Ethereum address' });
-    }
-
     try {
-        // Fetch balance from Ethereum network (in Wei)
+        if (!address) {
+            return res.status(400).json({ error: 'Wallet address is required' });
+        }
+        const user = await users.findOne({ walletId: address })
         const balanceWei = await web3.eth.getBalance(address);
-        const balanceEther = Web3.utils.fromWei(balanceWei, 'ether'); 
-        await users.updateOne({ walletId: address }, { $set: { balance: balanceWei } });
+        const newBalance = BigInt(balanceWei);
+        const balance = BigInt(user.balance);
+        const myBalance = balance+newBalance
+        await users.updateOne({ walletId: address }, { $set: { balance:myBalance.toString()} });
         res.status(200).json({
-            balance: balanceEther, 
+            balance:balanceWei, 
         });
     } catch (error) {
         console.error('Error fetching balance:', error);

@@ -346,7 +346,7 @@ const postPhotoCols = async (req, res, next) => {
       try {
         const items={
           itemName:colName,
-          profilePicp:publicUrl,
+          profilePic:publicUrl,
           description,
           nfts:[],
           approved:true,

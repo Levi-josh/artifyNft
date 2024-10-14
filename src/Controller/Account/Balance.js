@@ -14,6 +14,9 @@ const getBalance = async (req, res) => {
             return res.status(400).json({ error: 'Wallet address is required' });
         }
         const user = await users.findOne({ walletId: address })
+        if(!user){
+            return res.status(404).json({ error: 'no user with this address found' });
+        }
         const balanceWei = await web3.eth.getBalance(address);
         const newBalance = BigInt(balanceWei);
         const balance = BigInt(user.balance);

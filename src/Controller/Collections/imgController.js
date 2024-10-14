@@ -22,7 +22,7 @@ const postNfts = async (req, res, next) => {
         await blob.makePublic();
         const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
         try {
-          const user = await users.findById(colId)
+          const user = await users.findOne({'collections._id':colId})
           const collection = user.collections.find(prev => prev._id == colId)
           if(!collection){
             throw new Error('no collections')

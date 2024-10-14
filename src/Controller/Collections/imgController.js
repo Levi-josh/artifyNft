@@ -1,6 +1,8 @@
 const users = require('../../Models/UserSchema')
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb')
+const photoCols = require('../../Models/PhotoSchema')
+const popCols = require('../../Models/PopSchema')
 const trendCols = require('../../Models/TrendSchema')
 const latestCols = require('../../Models/LatestSchema')
 const { bucket} = require('../../Utils/FirebaseCred')
@@ -141,7 +143,7 @@ const postPhotoNfts = async (req, res, next) => {
           price,
           approved:true,
           } 
-          await latestCols.updateOne({_id:colId},{$push:{nfts:items}})
+          await photoCols.updateOne({_id:colId},{$push:{nfts:items}})
           res.status(200).json({ message: 'item created successfully'}); 
         } catch (err) {
         next(err)
@@ -173,7 +175,7 @@ const postPopNfts = async (req, res, next) => {
           price,
           approved:true,
           } 
-          await latestCols.updateOne({_id:colId},{$push:{nfts:items}})
+          await popCols.updateOne({_id:colId},{$push:{nfts:items}})
           res.status(200).json({ message: 'item created successfully'}); 
         } catch (err) {
         next(err)
@@ -317,7 +319,7 @@ const postPopCols = async (req, res, next) => {
           approved:true,
           artiste
         } 
-       const trending =  await trendCols.create(items)
+       const trending =  await popCols.create(items)
        res.status(200).json(trending)
       } catch (err) {
       next(err)
@@ -350,7 +352,7 @@ const postPhotoCols = async (req, res, next) => {
           approved:true,
           artiste
         } 
-       const trending =  await trendCols.create(items)
+       const trending =  await photoCols.create(items)
        res.status(200).json(trending)
       } catch (err) {
       next(err)

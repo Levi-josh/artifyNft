@@ -3,6 +3,7 @@ const latestCols = require('../../Models/LatestSchema')
 const trendingCols = require('../../Models/TrendSchema')
 const photoCol = require('../../Models/PhotoSchema')
 const popCol = require('../../Models/PopSchema')
+const { ObjectId } = require('mongodb')
 
 const getMyCollection = async (req,res,next) => {
 try {
@@ -15,9 +16,14 @@ res.status(200).json(myCollection)
 }
 const getMyNfts = async (req,res,next) => {
 try {
-const user = await users.findById(req.params.id)
-const mycols = user.collections.find(prev=>prev._id == req.params.id)
-res.status(200).json(mycols)    
+    const colIdObjectId = new ObjectId(req.params.id)
+    const user = await users.findOne({'collections._id':colIdObjectId})
+    if(!user){
+        throw new Error('no user found')
+    }else{
+        const collection = user.collections.find(prev => prev._id.toString() == colIdObjectId.toString())
+        res.status(200).json(collection)  
+    }  
 } catch (err) {
  next(err)   
 }

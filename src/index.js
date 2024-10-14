@@ -18,30 +18,18 @@ const walletRoute = require('./Routes/walletRoutes')
 const userRoute = require('./Routes/UserSchema')
 const cron = require('node-cron');
 const checkCollections = require('./BackgroundCheck/approved')
-
-// App.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', 'https://art-work-khaki.vercel.app');
-//     res.setHeader('Access-Control-Allow-Credentials', 'true');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-//     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    
-//     // Handle preflight requests
-//     if (req.method === 'OPTIONS') {
-//       return res.sendStatus(200); // Respond OK to preflight
-//     }
-    
-//     next();
-//   });
   
 const corsOptions = {
     origin: ['http://localhost:3000', 'https://art-work-khaki.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP methods
     credentials: true, // Allow cookies and credentials
-    allowedHeaders: ['Content-Type', 'Authorization'], // Add any headers you're using
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   };
   
 App.use(cors(corsOptions));
-App.options('*', cors());
+App.options('*', (req, res) => {
+    res.sendStatus(200);
+});
 App.use(express.json())
 App.use(bodyparser.json())
 // Ensure the uploads directory exists

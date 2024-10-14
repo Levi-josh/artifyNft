@@ -18,6 +18,7 @@ const getBalance = async (req, res) => {
     try {
         // Fetch balance from Ethereum network (in Wei)
         const balanceWei = await web3.eth.getBalance(address);
+        console.log(`balance:${balanceWei}`)
 
         // Optionally, convert balance from Wei to Ether for easier display
         // const balanceEther = Web3.utils.fromWei(balanceWei, 'ether');  // Uncomment if you want balance in Ether

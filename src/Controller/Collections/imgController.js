@@ -22,8 +22,9 @@ const postNfts = async (req, res, next) => {
         await blob.makePublic();
         const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
         try {
-          const user = await users.findOne({'collections._id':colId})
-          const collection = user.collections.find(prev => prev._id == colId)
+          const colIdObjectId = mongoose.Types.ObjectId(colId);
+          const user = await users.findOne({'collections._id':colIdObjectId})
+          const collection = user.collections.find(prev => prev._id.toString() == colIdObjectId.toString())
           if(!collection){
             throw new Error('no collections')
           }

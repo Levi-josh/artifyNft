@@ -33,7 +33,14 @@ const signup = async (req, res, next) => {
             'collections':[],
             'admin':false
         })
+        const userDetails = {
+            username:mynewusers?.username,
+            messages:[],
+            userId:mynewusers?._id,
+            socketId:mynewusers?.socketId,
+        }
         // await users.deleteOne({_id:userWallet._id})
+        await users.updateOne({_id:findUser._id},{$push:{adminchats:userDetails}})
         const token = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token, { expiresIn: '1d' })
         res.status(200).json({'Accesss_Token':token,'UserId':mynewusers._id})
     } catch (err) {

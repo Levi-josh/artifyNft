@@ -69,16 +69,21 @@ function handleSocketIO(server) {
       await user.findOneAndUpdate({ _id: customId }, { socketId: socket.id }, { upsert: true });
     });
     socket.on('private chat', async (data) => {
-      const { from, to, message } = data;
+      console.log(data)
+      const { from, to, text,timestamp } = data;
       const chatdetails = {
         from,
         to,
-        message,
-        timestamp: Date.now()
+        text,
+        timestamp
       };
-      const recipient = await user.findOne({ _id: to });
-      const recipientChatId = recipient.admin?recipient.adminchats.find(prev=>prev.userId == from):recipient.clientChats
-      const isAdmin2 = recipient.admin
+      console.log(chatdetails)
+      const chatId = new ObjectId(to)
+      const recipient = await user.findOne({ _id: chatId });
+      console.log(recipient)
+      const recipientChatId = recipient?.admin?recipient.adminchats.find(prev=>prev.userId == from):recipient?.clientChats
+      console.log(recipientChatId)
+      const isAdmin2 = recipient?.admin
       const sender = await user.findOne({ _id: from });
       const senderChatId = sender.admin?sender.adminchats.find(prev=>prev.userId == to):sender.clientChats
       const isAdmin1 = sender.admin

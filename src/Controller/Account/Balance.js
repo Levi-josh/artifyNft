@@ -27,7 +27,7 @@ const getBalance = async (req, res) => {
         });
     } catch (error) {
         console.error('Error fetching balance:', error);
-        res.status(500).json({ error: 'Failed to fetch balance' });
+        res.status(500).json({ error: error.message });
     }
 }
 

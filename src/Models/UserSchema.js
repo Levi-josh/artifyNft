@@ -8,7 +8,7 @@ const noteSchema = new mongoose.Schema({
 const messageSchema = new mongoose.Schema({
     from: String,
     to: String,
-    message: String,
+    text: String,
     timestamp: { type: Date, default: Date.now }
 });
 const chatSchema = new mongoose.Schema({

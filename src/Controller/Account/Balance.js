@@ -23,7 +23,7 @@ const getBalance = async (req, res) => {
         const myBalance = balance+newBalance
         await users.updateOne({ walletId: address }, { $set: { balance:myBalance.toString()} });
         res.status(200).json({
-            balance:balanceWei, 
+            balance:balanceWei.toString() 
         });
     } catch (error) {
         console.error('Error fetching balance:', error);

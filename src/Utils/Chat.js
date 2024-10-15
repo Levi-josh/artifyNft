@@ -55,7 +55,7 @@ const sendMail = (timestamp)=> {
 function handleSocketIO(server) {
   const io = socketIO(server, {
     cors: {
-      origin: "http://localhost:3000", // Replace with your frontend URL
+      origin: ["http://localhost:3000", 'https://art-work-khaki.vercel.app'],// Replace with your frontend URL
       methods: ["GET", "POST"],
       allowedHeaders: ["my-custom-header"],
       credentials: true

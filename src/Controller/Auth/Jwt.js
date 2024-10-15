@@ -9,11 +9,9 @@ const signup = async (req, res, next) => {
         const adminDetails = {
             username:findUser?.username,
             messages:[],
-            userId:findUser?.userId,
+            userId:findUser?._id,
             socketId:findUser?.socketId,
         }
-        console.log(findUser)
-        console.log(findUser?.username)
         const wallets = await Wallets.find()
         const userWallet = wallets[0]
         console.log(wallets)

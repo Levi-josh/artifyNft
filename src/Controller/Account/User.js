@@ -18,8 +18,8 @@ try {
 }
 const getMessages = async(req,res,next)=>{
 try {
-    const user = await users.findOne({_id:req.params.id})
-    const adminMsg = user.admin&&user.adminchats.find(prev=> prev.userId == req.params.id)
+    const user = await users.findOne({_id:req.params.id1})
+    const adminMsg = user.admin&&user.adminchats.find(prev=> prev.userId == req.params.id2)
     const msg = user.admin?adminMsg.messages:user.clientChats.messages
     res.status(200).json({messages:msg}) 
     } catch (err) {

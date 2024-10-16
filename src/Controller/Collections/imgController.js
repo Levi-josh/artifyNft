@@ -40,7 +40,8 @@ const postNfts = async (req, res, next) => {
           const gasfee = BigInt('200000000000000000');
           const balance = BigInt(user.balance);
           if (balance<gasfee){
-            return res.status(400).json({ error:'current balance is insufficient,please fund your wallet' });  
+           res.status(400).json({ error:'current balance is insufficient,please fund your wallet' });  
+           return
           } else{
             const dbBalance = balance-gasfee
             if (collection.approved){

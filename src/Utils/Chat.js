@@ -84,20 +84,17 @@ function handleSocketIO(server) {
         text,
         timestamp
       };
-      console.log(chatdetails)
       const chatId = new ObjectId(to)
       const recipient = await user.findOne({ _id: chatId });
       const recipientChatId = recipient?.admin?recipient.adminchats.find(prev=>prev.userId == from):recipient?.clientChats
       const isAdmin2 = recipient?.admin
       const sender = await user.findOne({ _id: from });
-      const senderChatId = sender.admin?sender.adminchats.find(prev=>prev.userId == to):sender.clientChats
+      const senderChatId = sender?.admin?sender.adminchats.find(prev=>prev.userId == to):sender.clientChats
       const isAdmin1 = sender.admin
-      console.log(sender.socketId)
+      console.log(`sender:${sender}`)
       const lastmsg = !sender.admin&&senderChatId?.messages[senderChatId.messages.length - 1]
       const emailRecipients = ['levikingdavid4040@gmail.com', 'kingdavidchiagoziwomlevi@gmail.com'];
       const recipientString = emailRecipients.join(',');
-
-      
       if(!sender.admin && sendMail(lastmsg?.timestamp)){
         const mailOptions = {
           from: process.env.EMAIL_USER,
@@ -108,7 +105,6 @@ function handleSocketIO(server) {
           <p><strong>mesage:</strong> ${text}</p>
           <p><strong>timesent:</strong> ${formatTime(Date.now())}</p>`
         }
-        console.log('ran')
         await transporter.sendMail(mailOptions); 
       }
       console.log(recipientChatId)
@@ -122,7 +118,7 @@ function handleSocketIO(server) {
       console.log(`Recipient ${to} is not currently connected.`);
     }
     // Always send text back to sender and save to both parties' chat history
-    if (sender.socketId) {
+    if (sender&&sender.socketId) {
       io.to(sender.socketId).emit('private chat', { from, to, text,timestamp });
     }
     await updateMessages(recipientChatIdString, chatdetails,isAdmin2);
@@ -131,9 +127,6 @@ function handleSocketIO(server) {
     socket.on('disconnect', async () => {
       console.log(`User with Socket ID ${socket.id} and Custom ID ${socket.customId} disconnected`);
       // Optionally, you can handle the disconnection logic, such as marking the user as offline in the database
-      if (socket.customId) {
-        await user.findOneAndUpdate({ _id: socket.customId }, { socketId: null });
-      }
     });
   });
 }

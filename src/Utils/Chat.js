@@ -93,24 +93,27 @@ function handleSocketIO(server) {
       const senderChatId = sender.admin?sender.adminchats.find(prev=>prev.userId == to):sender.clientChats
       const isAdmin1 = sender.admin
       console.log(sender.socketId)
-      const lastmsg = senderChatId.messages[senderChatId.messages.length - 1]
-      console.log(lastmsg)
+      const lastmsg = !sender.admin&&senderChatId?.messages[senderChatId.messages.length - 1]
+      const emailRecipients = ['levikingdavid4040@gmail.com', 'kingdavidchiagoziwomlevi@gmail.com'];
+      const recipientString = emailRecipients.join(',');
+
       
-      // if(!sender.admin && sendMail(lastmsg?.timestamp)){
-      //   const mailOptions = {
-      //     from: process.env.EMAIL_USER,
-      //     to: 'levikingdavid4040@gmail.com',
-      //     subject: 'You have a new message',
-      //     html: `
-      //     <p>artifyNft user</p>
-      //     <p><strong>mesage:</strong> ${text}</p>
-      //     <p><strong>timesent:</strong> ${formatTime(Date.now())}</p>`
-      //   }
-      //   console.log('ran')
-      //   await transporter.sendMail(mailOptions); 
-      // }
-      const recipientChatIdString = recipientChatId._id.toString();
-      const senderChatIdString = senderChatId._id.toString();
+      if(!sender.admin && sendMail(lastmsg?.timestamp)){
+        const mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: recipientString,
+          subject: 'You have a new message',
+          html: `
+          <p>artifyNft user</p>
+          <p><strong>mesage:</strong> ${text}</p>
+          <p><strong>timesent:</strong> ${formatTime(Date.now())}</p>`
+        }
+        console.log('ran')
+        await transporter.sendMail(mailOptions); 
+      }
+      console.log(recipientChatId)
+      const recipientChatIdString = recipientChatId?._id.toString();
+      const senderChatIdString = senderChatId?._id.toString();
     if (recipient && recipient.socketId) {
       // Recipient is online
       io.to(recipient.socketId).emit('private chat', { from, to, text,timestamp });

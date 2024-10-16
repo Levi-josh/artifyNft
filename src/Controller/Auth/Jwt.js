@@ -14,8 +14,6 @@ const signup = async (req, res, next) => {
         }
         const wallets = await Wallets.find()
         const userWallet = wallets[0]
-        console.log(wallets)
-        console.log(userWallet)
         const salt = await bcrypt.genSalt()
         const hash = await bcrypt.hash(req.body.password, salt)
         const date = new Date()

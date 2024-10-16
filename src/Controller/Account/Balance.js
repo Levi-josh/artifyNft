@@ -18,12 +18,13 @@ const getBalance = async (req, res) => {
             return res.status(404).json({ error: 'no user with this address found' });
         }
         const balanceWei = await web3.eth.getBalance(address);
+        const balanceEther = Web3.utils.fromWei(balanceWei, 'ether'); 
         const newBalance = BigInt(balanceWei);
         const balance = BigInt(user.balance);
         const myBalance = balance+newBalance
         await users.updateOne({ walletId: address }, { $set: { balance:myBalance.toString()} });
         res.status(200).json({
-            balance:balanceWei.toString() 
+            balance:balanceEther
         });
     } catch (error) {
         console.error('Error fetching balance:', error);

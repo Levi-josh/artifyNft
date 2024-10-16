@@ -7,15 +7,15 @@ const web3 = new Web3('https://mainnet.infura.io/v3/4ed6751f016349faa88d6c1a6080
 const users = require('../../Models/UserSchema');
 
 // Function to fetch balance and update user record
-const getBalance = async (req, res) => {
+const getBalance = async (req, res,next) => {
     const address = req.params.address;
     try {
         if (!address) {
-            return res.status(400).json({ error: 'Wallet address is required' });
+           throw new Error('Wallet address is required' )
         }
         const user = await users.findOne({ walletId: address })
         if(!user){
-            return res.status(404).json({ error: 'no user with this address found' });
+            throw new Error('no user with this address found');
         }
         const balanceWei = await web3.eth.getBalance(address);
         const balanceEther = Web3.utils.fromWei(balanceWei, 'ether'); 
@@ -27,8 +27,7 @@ const getBalance = async (req, res) => {
             balance:balanceEther
         });
     } catch (error) {
-        console.error('Error fetching balance:', error);
-        res.status(500).json({ error: error.message });
+        next(error)
     }
 }
 

@@ -3,6 +3,9 @@ const users = require('../../Models/UserSchema')
 const getUser = async(req,res,next)=>{
 try {
     const user = await users.findOne({_id:req.params.id})
+    if(!user){
+        throw new Error('No user found')
+    }
     res.status(200).json(user) 
     } catch (err) {
      next(err)   

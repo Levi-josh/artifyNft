@@ -17,7 +17,6 @@ const chatSchema = new mongoose.Schema({
     userId:String,
     socketId:String,
 })
-
 const myNfts = new mongoose.Schema({
     price:String,
     nftImage:String,

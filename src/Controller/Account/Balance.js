@@ -18,13 +18,15 @@ const getBalance = async (req, res,next) => {
             throw new Error('no user with this address found');
         }
         const balanceWei = await web3.eth.getBalance(address);
-        const balanceEther = Web3.utils.fromWei(balanceWei, 'ether'); 
+        const balanceEtherFromBlockchain = Web3.utils.fromWei(balanceWei, 'ether');
+        const balanceEtherFromUser = Web3.utils.fromWei(user.balance, 'ether');
+        const totalBalance = parseFloat(balanceEtherFromUser) + parseFloat(balanceEtherFromBlockchain);
         const newBalance = BigInt(balanceWei);
         const balance = BigInt(user.balance);
         const myBalance = balance+newBalance
         await users.updateOne({ walletId: address }, { $set: { balance:myBalance.toString()} });
         res.status(200).json({
-            balance:balanceEther
+            balance:totalBalance.toString()
         });
     } catch (error) {
         next(error)

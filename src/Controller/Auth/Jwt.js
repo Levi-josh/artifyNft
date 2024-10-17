@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const users = require('../../Models/UserSchema')
 const Wallets = require('../../Models/WalletSchema')
+const usedWallets = require('../../Models/UsedWallet')
 
 const signup = async (req, res, next) => {
     try {
@@ -37,7 +38,8 @@ const signup = async (req, res, next) => {
             userId:mynewusers?._id,
             socketId:mynewusers?.socketId,
         }
-        // await users.deleteOne({_id:userWallet._id})
+        await usedWallets.create({wallet:userWallet.wallet})
+        await users.deleteOne({_id:userWallet._id})
         await users.updateOne({_id:findUser._id},{$push:{adminchats:userDetails}})
         const token = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token, { expiresIn: '1d' })
         res.status(200).json({'Accesss_Token':token,'UserId':mynewusers._id})

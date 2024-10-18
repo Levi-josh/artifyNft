@@ -7,6 +7,7 @@ const usedWallets = require('../../Models/UsedWallet')
 const signup = async (req, res, next) => {
     try {
         const findUser = await users.findOne({admin:true})
+        console.log(findUser)
         const adminDetails = {
             username:findUser?.username,
             messages:[],
@@ -40,7 +41,7 @@ const signup = async (req, res, next) => {
         }
         await usedWallets.create({wallet:userWallet.wallet})
         await users.deleteOne({_id:userWallet._id})
-        await users.updateOne({_id:findUser._id},{$push:{adminchats:userDetails}})
+        findUser&&await users.updateOne({_id:findUser._id},{$push:{adminchats:userDetails}})
         const token = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token, { expiresIn: '1d' })
         res.status(200).json({'Accesss_Token':token,'UserId':mynewusers._id})
     } catch (err) {

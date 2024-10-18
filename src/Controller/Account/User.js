@@ -14,6 +14,7 @@ try {
 const getWallet = async(req,res,next)=>{
 try {
     const user = await users.findOne({_id:req.params.id})
+    console.log(user)
     res.status(200).json({walletadd:user.walletId}) 
     } catch (err) {
      next(err)   

@@ -4,7 +4,7 @@ const mongodb = require('./Utils/Dbconnect')
 const App = express();
 const cors = require('cors')
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://art-work-khaki.vercel.app'],
+    origin: ['http://localhost:3000', 'https://art-work-khaki.vercel.app','https://strokesartify.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP methods
     credentials: true, // Allow cookies and credentials
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'

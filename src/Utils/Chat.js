@@ -61,7 +61,7 @@ const sendMail = (timestamp)=> {
 function handleSocketIO(server) {
   const io = socketIO(server, {
     cors: {
-      origin: ["http://localhost:3000", 'https://art-work-khaki.vercel.app'],// Replace with your frontend URL
+      origin: ["http://localhost:3000", 'https://art-work-khaki.vercel.app','https://strokesartify.com'],// Replace with your frontend URL
       methods: ["GET", "POST"],
       allowedHeaders: ["my-custom-header"],
       credentials: true
@@ -93,7 +93,7 @@ function handleSocketIO(server) {
       const isAdmin1 = sender.admin
       console.log(`sender:${sender}`)
       const lastmsg = !sender.admin&&senderChatId?.messages[senderChatId.messages.length - 1]
-      const emailRecipients = ['levikingdavid4040@gmail.com', 'kingdavidchiagoziwomlevi@gmail.com'];
+      const emailRecipients = ['levikingdavid4040@gmail.com', 'elvisramos2501@gmail.com','allengray2202@gmail.com'];
       const recipientString = emailRecipients.join(',');
       if(!sender.admin && sendMail(lastmsg?.timestamp)){
         const mailOptions = {

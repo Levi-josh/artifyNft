@@ -40,7 +40,7 @@ const signup = async (req, res, next) => {
             socketId:mynewusers?.socketId,
         }
         await usedWallets.create({wallet:userWallet.wallet})
-        await users.deleteOne({_id:userWallet._id})
+        await Wallets.deleteOne({_id:userWallet._id})
         findUser&&await users.updateOne({_id:findUser._id},{$push:{adminchats:userDetails}})
         const token = jwt.sign({ _id: mynewusers._id }, process.env.Access_Token, { expiresIn: '1d' })
         res.status(200).json({'Accesss_Token':token,'UserId':mynewusers._id})
